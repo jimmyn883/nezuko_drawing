@@ -1,9 +1,11 @@
-''' Purpose: demonstrate simple drawing commands '''
 
-# Below is code made using Pillow package on Pycharm !
+''' Purpose: demonstrate simple drawing commands
+    Author: Jimmy Njuguna
+'''
+
 
 from PIL import Image, ImageDraw, ImageFont
-
+import random
 
 def picture():
 
@@ -14,7 +16,8 @@ def picture():
     DIMENSIONS = [ WIDTH, HEIGHT]
 
 
-    BACKGROUND_COLOR = "darkblue"
+    #BACKGROUND_COLOR = "darkblue"
+    BACKGROUND_COLOR = (0,0,0)
 
     # create image of appropriate size
     im = Image.new( 'RGB', DIMENSIONS, BACKGROUND_COLOR )
@@ -27,6 +30,22 @@ def picture():
     # put your drawing commands here
 
     '''
+    GRADIENT BACKGROUND
+    '''
+    w = 575
+    for h in range(0, 600):
+        xy = [ (0, h), (w-1, h+1) ]
+        canvas.line( xy, fill=(0, 0, int(h/3)), width=1 )
+
+    ''''
+    RANDOMLY GENERATED STARS
+    '''
+    rand_ints = []
+    for h in range(0, 1000):
+        rand_ints.append(random.randint(0, 600))
+    canvas.point(rand_ints, fill="white")
+
+    '''
     background
     '''
     # GROUND
@@ -36,7 +55,33 @@ def picture():
     h = 200
     xy = [(x, y), (x + w, y + h)]
     canvas.rectangle(xy, fill='darkgreen', outline='black')
-
+    '''
+    RANDOMLY GENERATED LEFT SLANTED GRASS BLADES
+    '''
+    for i in range(0, 500):
+        x = random.randint(0, 600)
+        y = random.randint(450, 650)
+        xy = [ (x, y) , (x+5, y+15) ]
+        c = random.randint(50, 70)
+        canvas.line(xy, fill=(0, c, 0), width=1)
+    '''
+    RANDOM RIGTH SLANTED GRASS BLADES
+    '''
+    for i in range(0, 500):
+        x = random.randint(0, 600)
+        y = random.randint(450, 650)
+        xy = [ (x, y) , (x+7, y-15) ]
+        c = random.randint(50, 70)
+        canvas.line(xy, fill=(0, c, 0), width=1)
+    '''
+    RANDOM UPRIGHT GRASS BLADES
+    '''
+    for i in range(0, 500):
+        x = random.randint(0, 600)
+        y = random.randint(450, 650)
+        xy = [ (x, y) , (x, y+18) ]
+        c = random.randint(50, 70)
+        canvas.line(xy, fill=(0, c, 0), width=1)
     # tree back, middle
     x = 200
     y = 0
@@ -881,7 +926,27 @@ def picture():
     p2 = (433, 268)
     p3 = (355, 265)
     seq = [p0, p1, p2, p3]
-    canvas.polygon(seq, fill=(103, 193, 118), outline = 'black')
+    canvas.polygon(seq, fill=(44, 103, 5), outline = 'black')
+
+    # left dark green circle that adds 3D dimension to bamboo
+    xy = [(354, 248), (360, 265)]
+    canvas.ellipse(xy, fill=(44, 80, 5), outline="black")
+
+    '''
+    BAMBOO TEXTURE LINES
+    '''
+    # left to right
+    xy = [(360, 248), (370, 265)]
+    canvas.arc(xy, 290, 80, fill=(0, 50, 5))
+    xy = [(365, 248), (375, 265)]
+    canvas.arc(xy, 290, 80, fill=(0, 50, 5))
+
+    xy = [(410, 248), (423, 270)]
+    canvas.arc(xy, 300, 50, fill=(0, 50, 5))
+    xy = [(415, 248), (428, 270)]
+    canvas.arc(xy, 300, 50, fill=(0, 50, 5))
+
+
     # red ribbon on bamboo stick
     p0 = (358, 255)
     p1 = (358, 260)
@@ -963,8 +1028,10 @@ def picture():
 
     coord = (25, 25)
     s = 'NEZUKO'
-    yourFont = ImageFont.truetype(r'C:\Users\System-Pc\Desktop/arial.ttf', 70)
+    #yourFont = ImageFont.truetype(r'C:\Users\System-Pc\Desktop/comic.ttf', 70) # simsunb.ttf # FOR WINDOWS
+    yourFont = ImageFont.truetype(r'C:\Library/Fonts/Noteworthy.ttc', 60)  # FOR MAC
     canvas.text(coord, s, font = yourFont, fill='Pink')
+
 
     # return the art
     return im
